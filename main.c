@@ -20,7 +20,7 @@
 #include "420ToNv12.h"
 #define TIMING  1
 #if (TIMING)
-struct timeval tv1, tv2;
+struct timeval tv1, tv2, res;
 #endif
 
 #define MAX_WIDTH   3840
@@ -120,9 +120,10 @@ int main(int argc, const char * argv[]) {
             );
             #if (TIMING)
             gettimeofday(&tv2, NULL);
-            fprintf(stderr, "Total time = %f seconds\n",
-            (double) (tv2.tv_usec - tv1.tv_usec) / 1000000 +
-            (double) (tv2.tv_sec - tv1.tv_sec));
+            timersub(&tv2, &tv1, &res);
+            
+            fprintf(stderr, "Total time = %d seconds %d microsecs\n",
+                    res.tv_sec, res.tv_usec);
             #endif
             
             write(fd_wr, y, wxh);

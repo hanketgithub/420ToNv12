@@ -18,6 +18,7 @@
 #include <unistd.h>
 
 #include "420ToNv12.h"
+
 #define TIMING  1
 #if (TIMING)
 struct timeval tv1, tv2, res;
@@ -111,6 +112,7 @@ int main(int argc, const char * argv[]) {
             #if (TIMING)
             gettimeofday(&tv1, NULL);
             #endif
+            
             planar_to_interleave
             (
                 wxh,
@@ -118,6 +120,7 @@ int main(int argc, const char * argv[]) {
                 u,
                 v
             );
+            
             #if (TIMING)
             gettimeofday(&tv2, NULL);
             timersub(&tv2, &tv1, &res);

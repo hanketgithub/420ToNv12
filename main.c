@@ -24,8 +24,8 @@
 struct timeval tv1, tv2, res;
 #endif
 
-#define MAX_WIDTH   3840
-#define MAX_HEIGHT  2160
+#define MAX_WIDTH   7680
+#define MAX_HEIGHT  4320
 
 
 typedef struct

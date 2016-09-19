@@ -40,8 +40,8 @@ static uint8_t u_et_v[MAX_WIDTH * MAX_HEIGHT / 2];
 static string_t null;
 
 int main(int argc, const char * argv[]) {
-    int fd_rd;
-    int fd_wr;
+    int ifd;
+    int ofd;
     
     uint8_t *y;
     uint8_t *u;
@@ -72,8 +72,8 @@ int main(int argc, const char * argv[]) {
 
 
     // get input file name from comand line
-    fd_rd = open(argv[1], O_RDONLY);
-    if (fd_rd < 0)
+    ifd = open(argv[1], O_RDONLY);
+    if (ifd < 0)
     {
         perror(argv[1]);
         exit(EXIT_FAILURE);
@@ -85,7 +85,7 @@ int main(int argc, const char * argv[]) {
     strcat(output.name, "_nv12");
     strcat(output.name, cp);
     
-    fd_wr = open
+    ofd = open
             (
              output.name,
              O_WRONLY | O_CREAT | O_TRUNC,
@@ -105,7 +105,7 @@ int main(int argc, const char * argv[]) {
     
     while (1)
     {
-        rd_sz = read(fd_rd, img, wxh * 3 / 2);
+        rd_sz = read(ifd, img, wxh * 3 / 2);
         
         if (rd_sz == wxh * 3 / 2)
         {
@@ -129,8 +129,8 @@ int main(int argc, const char * argv[]) {
                     res.tv_sec, res.tv_usec);
             #endif
             
-            write(fd_wr, y, wxh);
-            write(fd_wr, u_et_v, wxh / 2);
+            write(ofd, y, wxh);
+            write(ofd, u_et_v, wxh / 2);
         }
         else
         {
@@ -140,8 +140,8 @@ int main(int argc, const char * argv[]) {
         fflush(stderr);
     }
 
-    close(fd_rd);
-    close(fd_wr);
+    close(ifd);
+    close(ofd);
     
     fprintf(stderr, "Done\n");
     fprintf(stderr, "Output file: %s\n", output.name);

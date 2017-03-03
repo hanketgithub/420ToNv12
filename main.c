@@ -80,7 +80,7 @@ int main(int argc, const char * argv[]) {
     }
     
     // specify output file name
-    cp = rindex(argv[1], '.');
+    cp = strrchr(argv[1], '.');
     strncpy(output.name, argv[1], cp - argv[1]);
     strcat(output.name, "_nv12");
     strcat(output.name, cp);

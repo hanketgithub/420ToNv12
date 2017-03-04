@@ -28,16 +28,8 @@ struct timeval tv1, tv2, res;
 #define MAX_HEIGHT  4320
 
 
-typedef struct
-{
-    char name[256];
-} string_t;
-
-
 static uint8_t img[MAX_WIDTH * MAX_HEIGHT * 3 / 2];
 static uint8_t u_et_v[MAX_WIDTH * MAX_HEIGHT / 2];
-
-static string_t null;
 
 int main(int argc, const char * argv[]) {
     int ifd;
@@ -53,7 +45,7 @@ int main(int argc, const char * argv[]) {
     uint32_t wxh;
     
     char *cp;
-    string_t output;
+    char output[256] = { 0 };
     
     if (argc < 4)
     {
@@ -68,7 +60,6 @@ int main(int argc, const char * argv[]) {
     height      = 0;
     wxh         = 0;
     cp          = NULL;
-    output      = null;
 
 
     // get input file name from comand line
@@ -81,13 +72,13 @@ int main(int argc, const char * argv[]) {
     
     // specify output file name
     cp = strrchr(argv[1], '.');
-    strncpy(output.name, argv[1], cp - argv[1]);
-    strcat(output.name, "_nv12");
-    strcat(output.name, cp);
+    strncpy(output, argv[1], cp - argv[1]);
+    strcat(output, "_nv12");
+    strcat(output, cp);
     
     ofd = open
             (
-             output.name,
+             output,
              O_WRONLY | O_CREAT | O_TRUNC,
              S_IRUSR
             );
@@ -144,7 +135,7 @@ int main(int argc, const char * argv[]) {
     close(ofd);
     
     fprintf(stderr, "Done\n");
-    fprintf(stderr, "Output file: %s\n", output.name);
+    fprintf(stderr, "Output file: %s\n", output);
     
     return 0;
 }

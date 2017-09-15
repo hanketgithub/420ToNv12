@@ -116,7 +116,7 @@ int main(int argc, const char * argv[]) {
             gettimeofday(&tv2, NULL);
             timersub(&tv2, &tv1, &res);
             
-            fprintf(stderr, "Total time = %d seconds %d microsecs\n",
+            fprintf(stderr, "Total time = %d seconds %4d microsecs\n",
                     res.tv_sec, res.tv_usec);
             #endif
             

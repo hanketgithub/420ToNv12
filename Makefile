@@ -10,5 +10,8 @@ all: $(objects)
 $(target).o: $(target).c
 	$(CC) $(OPTS) -c $<
 
+install:
+	cp $(target) /usr/local/bin
+
 clean:
 	$(RM) $(target) $(objects)

@@ -149,7 +149,7 @@ int main(int argc, const char * argv[]) {
     fprintf(stderr, "Output file: %s\n", output);
     
     double interval_in_double = ((double) tv_interval.tv_sec * 1000000 + tv_interval.tv_usec) / 1000000;
-    fprintf(stderr, "Performance: %f x=%f\n", frame_cnt / interval_in_double, interval_in_double);
+    fprintf(stderr, "Performance: %f frames per second\n", frame_cnt / interval_in_double);
 
     return 0;
 }

@@ -47,6 +47,11 @@ int main(int argc, const char * argv[]) {
     char *cp;
     char output[256] = { 0 };
     
+    uint32_t frame_cnt;
+    struct timeval tv_start = { 0 };
+    struct timeval tv_end = { 0 };
+    struct timeval tv_interval = { 0 };
+    
     if (argc < 4)
     {
         fprintf(stderr, "useage: %s [input_file] [width] [height]\n", argv[0]);
@@ -60,6 +65,7 @@ int main(int argc, const char * argv[]) {
     height      = 0;
     wxh         = 0;
     cp          = NULL;
+    frame_cnt   = 0;
 
 
     // get input file name from comand line
@@ -94,6 +100,7 @@ int main(int argc, const char * argv[]) {
     
     fprintf(stderr, "Processing: ");
     
+    gettimeofday(&tv_start, NULL);
     while (1)
     {
         rd_sz = read(ifd, img, wxh * 3 / 2);
@@ -116,12 +123,14 @@ int main(int argc, const char * argv[]) {
             gettimeofday(&tv2, NULL);
             timersub(&tv2, &tv1, &res);
             
-            fprintf(stderr, "Total time = %d seconds %4d microsecs\n",
+            fprintf(stderr, "Total time = %ld seconds %4d microsecs\n",
                     res.tv_sec, res.tv_usec);
             #endif
             
             write(ofd, y, wxh);
             write(ofd, u_et_v, wxh / 2);
+            
+            frame_cnt++;
         }
         else
         {
@@ -130,6 +139,8 @@ int main(int argc, const char * argv[]) {
         fputc('.', stderr);
         fflush(stderr);
     }
+    gettimeofday(&tv_end, NULL);
+    timersub(&tv_end, &tv_start, &tv_interval);
 
     close(ifd);
     close(ofd);
@@ -137,5 +148,8 @@ int main(int argc, const char * argv[]) {
     fprintf(stderr, "Done\n");
     fprintf(stderr, "Output file: %s\n", output);
     
+    double interval_in_double = ((double) tv_interval.tv_sec * 1000000 + tv_interval.tv_usec) / 1000000;
+    fprintf(stderr, "Performance: %f x=%f\n", frame_cnt / interval_in_double, interval_in_double);
+
     return 0;
 }

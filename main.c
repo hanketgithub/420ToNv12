@@ -19,8 +19,8 @@
 
 #include "420ToNv12.h"
 
-#define TIMING  1
-#if (TIMING)
+#define BENCHMARK  1
+#if (BENCHMARK)
 struct timeval tv1, tv2, res;
 #endif
 
@@ -107,7 +107,7 @@ int main(int argc, const char * argv[]) {
         
         if (rd_sz == wxh * 3 / 2)
         {
-            #if (TIMING)
+            #if (BENCHMARK)
             gettimeofday(&tv1, NULL);
             #endif
             
@@ -119,7 +119,7 @@ int main(int argc, const char * argv[]) {
                 v
             );
             
-            #if (TIMING)
+            #if (BENCHMARK)
             gettimeofday(&tv2, NULL);
             timersub(&tv2, &tv1, &res);
             

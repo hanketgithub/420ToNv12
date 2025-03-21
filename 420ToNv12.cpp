@@ -8,7 +8,7 @@
 
 #include <stdint.h>
 
-#define SSE
+//#define SSE
 
 typedef char __attribute__((vector_size(8)))    v8qi;
 

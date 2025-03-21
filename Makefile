@@ -1,13 +1,13 @@
 target  = 420ToNv12
-sources = main.c $(target).c
-objects = $(patsubst %.c,%.o,$(sources))
-CC = gcc
+sources = main.cpp $(target).cpp
+objects = $(patsubst %.cpp,%.o,$(sources))
+CC = g++
 OPTS = -Wall -O2
 
 all: $(objects)
 	$(CC) $(OPTS) -o $(target) $(objects)
 
-$(target).o: $(target).c
+$(target).o: $(target).cpp
 	$(CC) $(OPTS) -c $<
 
 install:

@@ -2,8 +2,8 @@
 //  main.c
 //  420ToNv12
 //
-//  Created by Hank Lee on 2025/03/05.
-//  Copyright (c) 2025 Hank Lee. All rights reserved.
+//  Created by Hank Lee on 5/31/15.
+//  Copyright (c) 2015 Hank Lee. All rights reserved.
 //
 
 #include <stdint.h>
@@ -54,8 +54,7 @@ int main(int argc, const char * argv[]) {
 
     if (argc < 4)
     {
-        fprintf(stderr, "usage: %s [input file] [width] [height]\n", argv[0]);
-        
+        fprintf(stderr, "useage: %s [input_file] [width] [height]\n", argv[0]);        
         return -1;
     }
 
@@ -77,7 +76,7 @@ int main(int argc, const char * argv[]) {
     }
 
     // specify output file name
-    cp = strrchr(argv[1], '.');
+    cp = strrchr((char *) argv[1], '.');
     strncpy(output, argv[1], cp - argv[1]);
     strcat(output, "_nv12");
     strcat(output, cp);
